@@ -1,9 +1,6 @@
 import axios from 'axios';
 
-const api = axios.create({
-  baseURL: process.env.REACT_APP_API_URL || 'http://localhost:5000/api',
-  timeout: 15000,
-});
+const api = axios.create({ baseURL: 'https://music-library-unzc.onrender.com' });
 
 // ── Request: attach JWT from localStorage ──────────────────────────
 api.interceptors.request.use(
