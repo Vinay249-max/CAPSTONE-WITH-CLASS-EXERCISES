@@ -5,8 +5,8 @@ const Notification = require('../models/Notification');
 const User = require('../models/User');
 
 // Get all visible songs with optional search filters
-const getAllSongs = async ({ search, artist, album, director }) => {
-  let query = { isVisible: true };
+const getAllSongs = async ({ search, artist, album, director, includeHidden }) => {
+  let query = includeHidden ? {} : { isVisible: true };
   if (search) query.songName = { $regex: search, $options: 'i' };
 
   let result = await Song.find(query)

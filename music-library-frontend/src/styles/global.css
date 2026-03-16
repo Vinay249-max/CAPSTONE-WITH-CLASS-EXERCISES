@@ -44,7 +44,30 @@
   --navbar-height: 64px;
 }
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+/* Light mode overrides */
+body.light-mode {
+  --bg-base:       #f5f5fa;
+  --bg-surface:    #ffffff;
+  --bg-elevated:   #ededf5;
+  --bg-overlay:    #e2e2ec;
+
+  --text-primary:   #0a0a0f;
+  --text-secondary: #5a5a70;
+  --text-muted:     #8a8aa0;
+  --text-inverse:   #f5f5fa;
+
+  --border-subtle:  rgba(0,0,0,0.06);
+  --border-visible: rgba(0,0,0,0.12);
+  
+  --shadow-sm:  0 2px 8px rgba(0,0,0,0.1);
+  --shadow-md:  0 4px 20px rgba(0,0,0,0.15);
+  --shadow-lg:  0 8px 40px rgba(0,0,0,0.2);
+}
+
+*, *::before, *::after { 
+  box-sizing: border-box; margin: 0; padding: 0; 
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
 
 html { scroll-behavior: smooth; }
 

@@ -4,6 +4,7 @@ import { Toaster } from 'react-hot-toast';
 
 import { AuthProvider } from './context/AuthContext';
 import { PlayerProvider } from './context/PlayerContext';
+import { ThemeProvider } from './context/ThemeContext';
 
 import ProtectedRoute from './components/common/ProtectedRoute';
 import AppLayout from './components/layout/AppLayout';
@@ -33,6 +34,7 @@ import AdminArtistsPage      from './pages/admin/AdminArtistsPage';
 import AdminDirectorsPage    from './pages/admin/AdminDirectorsPage';
 import AdminAlbumsPage       from './pages/admin/AdminAlbumsPage';
 import AdminNotificationsPage from './pages/admin/AdminNotificationsPage';
+import AdminUserManagement    from './pages/admin/AdminUserManagement';
 
 // Wrap a user page inside the shared layout + user-only guard
 const UserPage = ({ children }) => (
@@ -49,60 +51,63 @@ const AdminPage = ({ children }) => (
 );
 
 const App = () => (
-  <AuthProvider>
-    <PlayerProvider>
-      <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
-        <Toaster
-          position="bottom-right"
-          toastOptions={{
-            style: {
-              background: 'var(--bg-elevated)',
-              color: 'var(--text-primary)',
-              border: '1px solid var(--border-visible)',
-              fontFamily: 'var(--font-body)',
-              fontSize: '14px',
-            },
-            success: { iconTheme: { primary: 'var(--accent-primary)', secondary: 'var(--text-inverse)' } },
-            error:   { iconTheme: { primary: 'var(--accent-secondary)', secondary: '#fff' } },
-            duration: 3500,
-          }}
-        />
+  <ThemeProvider>
+    <AuthProvider>
+      <PlayerProvider>
+        <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+          <Toaster
+            position="bottom-right"
+            toastOptions={{
+              style: {
+                background: 'var(--bg-elevated)',
+                color: 'var(--text-primary)',
+                border: '1px solid var(--border-visible)',
+                fontFamily: 'var(--font-body)',
+                fontSize: '14px',
+              },
+              success: { iconTheme: { primary: 'var(--accent-primary)', secondary: 'var(--text-inverse)' } },
+              error:   { iconTheme: { primary: 'var(--accent-secondary)', secondary: '#fff' } },
+              duration: 3500,
+            }}
+          />
 
-        <Routes>
-          {/* ── Public ─────────────────────────────────────── */}
-          <Route path="/login"    element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
+          <Routes>
+            {/* ── Public ─────────────────────────────────────── */}
+            <Route path="/login"    element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
 
-          {/* ── User routes ────────────────────────────────── */}
-          <Route path="/home"             element={<UserPage><HomePage /></UserPage>} />
-          <Route path="/songs"            element={<UserPage><SongsPage /></UserPage>} />
-          <Route path="/songs/:id"        element={<UserPage><SongDetailPage /></UserPage>} />
-          <Route path="/search"           element={<UserPage><SearchPage /></UserPage>} />
-          <Route path="/playlists"        element={<UserPage><PlaylistsPage /></UserPage>} />
-          <Route path="/playlists/:id"    element={<UserPage><PlaylistDetailPage /></UserPage>} />
-          <Route path="/notifications"    element={<UserPage><NotificationsPage /></UserPage>} />
-          <Route path="/profile"          element={<UserPage><ProfilePage /></UserPage>} />
-          <Route path="/artists"          element={<UserPage><ArtistsPage /></UserPage>} />
-          <Route path="/artists/:id"      element={<UserPage><ArtistDetailPage /></UserPage>} />
-          <Route path="/directors"        element={<UserPage><DirectorsPage /></UserPage>} />
-          <Route path="/directors/:id"    element={<UserPage><DirectorDetailPage /></UserPage>} />
+            {/* ── User routes ────────────────────────────────── */}
+            <Route path="/home"             element={<UserPage><HomePage /></UserPage>} />
+            <Route path="/songs"            element={<UserPage><SongsPage /></UserPage>} />
+            <Route path="/songs/:id"        element={<UserPage><SongDetailPage /></UserPage>} />
+            <Route path="/search"           element={<UserPage><SearchPage /></UserPage>} />
+            <Route path="/playlists"        element={<UserPage><PlaylistsPage /></UserPage>} />
+            <Route path="/playlists/:id"    element={<UserPage><PlaylistDetailPage /></UserPage>} />
+            <Route path="/notifications"    element={<UserPage><NotificationsPage /></UserPage>} />
+            <Route path="/profile"          element={<UserPage><ProfilePage /></UserPage>} />
+            <Route path="/artists"          element={<UserPage><ArtistsPage /></UserPage>} />
+            <Route path="/artists/:id"      element={<UserPage><ArtistDetailPage /></UserPage>} />
+            <Route path="/directors"        element={<UserPage><DirectorsPage /></UserPage>} />
+            <Route path="/directors/:id"    element={<UserPage><DirectorDetailPage /></UserPage>} />
 
-          {/* ── Admin routes ───────────────────────────────── */}
-          <Route path="/admin"                  element={<AdminPage><AdminDashboard /></AdminPage>} />
-          <Route path="/admin/songs"            element={<AdminPage><AdminSongsPage /></AdminPage>} />
-          <Route path="/admin/artists"          element={<AdminPage><AdminArtistsPage /></AdminPage>} />
-          <Route path="/admin/directors"        element={<AdminPage><AdminDirectorsPage /></AdminPage>} />
-          <Route path="/admin/albums"           element={<AdminPage><AdminAlbumsPage /></AdminPage>} />
-          <Route path="/admin/notifications"    element={<AdminPage><AdminNotificationsPage /></AdminPage>} />
-          <Route path="/admin/profile"          element={<AdminPage><ProfilePage /></AdminPage>} />
+            {/* ── Admin routes ───────────────────────────────── */}
+            <Route path="/admin"                  element={<AdminPage><AdminDashboard /></AdminPage>} />
+            <Route path="/admin/songs"            element={<AdminPage><AdminSongsPage /></AdminPage>} />
+            <Route path="/admin/artists"          element={<AdminPage><AdminArtistsPage /></AdminPage>} />
+            <Route path="/admin/directors"        element={<AdminPage><AdminDirectorsPage /></AdminPage>} />
+            <Route path="/admin/albums"           element={<AdminPage><AdminAlbumsPage /></AdminPage>} />
+            <Route path="/admin/notifications"    element={<AdminPage><AdminNotificationsPage /></AdminPage>} />
+            <Route path="/admin/users"            element={<AdminPage><AdminUserManagement /></AdminPage>} />
+            <Route path="/admin/profile"          element={<AdminPage><ProfilePage /></AdminPage>} />
 
-          {/* ── Fallback ───────────────────────────────────── */}
-          <Route path="/"  element={<Navigate to="/login" replace />} />
-          <Route path="*"  element={<Navigate to="/login" replace />} />
-        </Routes>
-      </BrowserRouter>
-    </PlayerProvider>
-  </AuthProvider>
+            {/* ── Fallback ───────────────────────────────────── */}
+            <Route path="/"  element={<Navigate to="/login" replace />} />
+            <Route path="*"  element={<Navigate to="/login" replace />} />
+          </Routes>
+        </BrowserRouter>
+      </PlayerProvider>
+    </AuthProvider>
+  </ThemeProvider>
 );
 
 export default App;

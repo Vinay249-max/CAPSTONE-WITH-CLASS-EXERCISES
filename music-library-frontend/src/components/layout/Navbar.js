@@ -4,6 +4,7 @@ import { FiBell, FiLogOut, FiMenu, FiX, FiMusic } from 'react-icons/fi';
 import { useAuth } from '../../context/AuthContext';
 import useNotifications from '../../hooks/useNotifications';
 import NotificationDropdown from '../notifications/NotificationDropdown';
+import ThemeToggle from '../common/ThemeToggle';
 import { getInitials, getFileUrl } from '../../utils/helpers';
 import toast from 'react-hot-toast';
 
@@ -35,6 +36,7 @@ const Navbar = ({ onMenuToggle, menuOpen }) => {
         </div>
 
         <div className="navbar-right">
+          <ThemeToggle />
           {/* Notification bell */}
           <div style={{ position: 'relative' }}>
             <button

@@ -32,7 +32,7 @@ const AdminSongsPage = () => {
     setLoading(true);
     try {
       const [sRes, arRes, dirRes, alRes] = await Promise.all([
-        getSongs({}), getArtists(), getDirectors(), getAlbums(),
+        getSongs({ includeHidden: true }), getArtists(), getDirectors(), getAlbums(),
       ]);
       // Admin sees all songs (visible + hidden via backend returning isVisible field)
       setSongs(sRes.data);

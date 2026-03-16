@@ -7,7 +7,14 @@ const songService = require('../services/songService');
 // Get all visible songs with optional search
 router.get('/', protect, async (req, res) => {
   try {
-    const songs = await songService.getAllSongs(req.query);
+    const params = { ...req.query };
+    // Only admins can request to see hidden songs
+    if (req.user && req.user.role === 'admin' && req.query.includeHidden === 'true') {
+      params.includeHidden = true;
+    } else {
+      params.includeHidden = false;
+    }
+    const songs = await songService.getAllSongs(params);
     res.json(songs);
   } catch (err) {
     res.status(500).json({ message: err.message });

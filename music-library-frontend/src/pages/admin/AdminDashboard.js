@@ -13,8 +13,9 @@ const AdminDashboard = () => {
     const load = async () => {
       try {
         // Fetch all including hidden for admin view
-        const [sRes, arRes, dirRes, alRes] = await Promise.all([
-          getSongs({}), getArtists(), getDirectors(), getAlbums(),
+        const [sRes, arRes, dirRes, alRes, uRes] = await Promise.all([
+          getSongs({ includeHidden: true }), getArtists(), getDirectors(), getAlbums(),
+          import('../../services/userService').then(m => m.getUsers())
         ]);
         // Admin needs to see hidden songs too — we approximate from visible
         const songs = sRes.data;
@@ -24,6 +25,7 @@ const AdminDashboard = () => {
           artists: arRes.data.length,
           directors: dirRes.data.length,
           albums: alRes.data.length,
+          users: uRes.data.length,
         });
       } catch (_) {}
       finally { setLoading(false); }
@@ -36,6 +38,7 @@ const AdminDashboard = () => {
     { icon: FiEyeOff,  label: 'Hidden Songs',   value: stats.hiddenSongs, color: 'var(--accent-secondary)', to: '/admin/songs' },
     { icon: FiUsers,   label: 'Artists',        value: stats.artists,     color: 'var(--accent-blue)',      to: '/admin/artists' },
     { icon: FiDisc,    label: 'Albums',         value: stats.albums,      color: 'var(--accent-purple)',    to: '/admin/albums' },
+    { icon: FiUsers,   label: 'Users',          value: stats.users,       color: 'var(--accent-secondary)', to: '/admin/users' },
   ] : [];
 
   return (
@@ -79,6 +82,7 @@ const AdminDashboard = () => {
             { to: '/admin/artists',  label: 'Manage Artists',  desc: 'Add and manage artist profiles' },
             { to: '/admin/directors',label: 'Music Directors', desc: 'Manage music director records' },
             { to: '/admin/albums',   label: 'Manage Albums',   desc: 'Add and edit album entries' },
+            { to: '/admin/users',    label: 'Manage Users',    desc: 'View users and manage roles' },
           ].map(({ to, label, desc }) => (
             <Link key={to} to={to} className="admin-quicklink">
               <div>
