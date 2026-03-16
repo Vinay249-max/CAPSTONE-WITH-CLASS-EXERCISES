@@ -124,6 +124,7 @@ const Sidebar = ({ mobileOpen, onClose }) => {
         }
         @media (max-width: 768px) {
           .sidebar {
+            width: 280px;
             transform: translateX(-100%);
             z-index: 160;
           }
